@@ -6,7 +6,7 @@ module.exports = {
     if(!req.params.id){
       userModel.getAllUsers((err, result) => {
         if (err) {
-          return res.status(500).send({ error: "Database error: "+err });
+          return res.status(500).send({ message: "Database error: "+err })
         }
         res.send({data: result})
       })
@@ -14,7 +14,7 @@ module.exports = {
       userModel.getAUser(req.params.id,(err,result)=>{
         if(err){
           console.log(err)
-          return res.status(500).send({ error:"Database error: "+err })
+          return res.status(500).send({ message:"Database error: "+err })
         }
         res.send({data: result})
       })
@@ -33,14 +33,18 @@ module.exports = {
       
       userModel.newUser(newUsername, newMail, hashedPassword, (err) => {
         if (err) {
-          return res.status(500).send({ error: "Database error" });
+          return res.status(500).send({ error: "Database error: "+err });
         }
         res.status(201).send({ message: "Yeni Kullanıcı Oluşturuldu" });
-      });
-    });
+      })
+    })
   },
 
   compareUser: (req,res)=> {
+    
+  },
+
+  editUserPUT: (req,res)=>{
     
   }
 };
