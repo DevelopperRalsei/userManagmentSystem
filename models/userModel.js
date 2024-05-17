@@ -70,4 +70,25 @@ module.exports = {
     })
     })
   },
+
+  updateUser: (id, username,email,password,callback) => {
+    pool.getConnection((err,con)=>{
+      if(err){
+        console.error("Mysql pool connection err: "+err)
+        callback(err)
+        return
+      }
+
+      const sql = "UPDATE users SET username = ?,email = ?,password = ? WHERE id = ?"
+      con.query(sql,[username,email,password,id],(err)=>{
+        if(err){
+          console.error("MySQL query Err: "+err)
+          callback(err)
+          return
+        }
+        callback(null)
+      })
+      con.release()
+    })
+  }
 }

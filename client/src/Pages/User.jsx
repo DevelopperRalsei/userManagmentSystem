@@ -33,7 +33,7 @@ function User(props) {
       passValidation.removeClass("border-danger")
       passValidationSpan.addClass("d-none")
 
-      userRoutes.updateUser(usernameInputV, emailInputV, passInputV)
+      userRoutes.updateUser(userData.id, usernameInputV, emailInputV, passInputV)
         .then(response => {
           setMsg(response.data.message)
           const messageModal = new bootstrap.Modal(document.getElementById("messageModal"))

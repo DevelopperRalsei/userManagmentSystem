@@ -25,8 +25,9 @@ const kendimdenNefretEdiyorum = {
     }).then(response => {return response})
     .catch(err => console.error("Server post err: "+err)),
 
-  updateUser: async (username,mail,pass) =>
+  updateUser: async (id,username,mail,pass) =>
     await  axios.put("http://localhost:8080/api/users/updateUser",{
+      userId:id,
       newUsername: username,
       newMail: mail,
       newPass: pass

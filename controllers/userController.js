@@ -45,6 +45,22 @@ module.exports = {
   },
 
   editUserPUT: (req,res)=>{
-    
+    const { userId, newUsername, newMail,newPass } = req.body
+
+    bcrypt.hash(newPass,10,(err,hashedPassword)=>{
+      if(err){
+        console.error("Password hash Err: "+err)
+        return res.send({message: "Password Hash Err: "+err})
+      }
+
+      userModel.updateUser(userId,newUsername,newMail,hashedPassword,err=>{
+        if(err){
+          console.error("Mysql Query Err: "+err)
+          return res.send({message: "Kullanıcı Düzenlenemedi Hata: "+err})
+        }
+
+        return res.send({message: "Kullanıcı Değiştirildi"})
+      })
+    })
   }
 };
