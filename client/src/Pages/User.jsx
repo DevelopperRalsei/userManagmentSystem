@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../Components/Navbar'
 import userRoutes from "../Routes/UserRoutes"
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min'
 import $ from "jquery"
+import Layout from './Layout'
 
 function User(props) {
-  const userData = props.userData
+  const {userData} = props
 
   const [usernameInputV, setUsernameInputV] = useState("")
   const [emailInputV, setemailInputV] = useState("")
@@ -13,6 +13,9 @@ function User(props) {
   const [passValidationInputV, setPassValidationInputV] = useState("")
   const [msg, setMsg] = useState("")
 
+  const passInput = $(".passwordI")
+  const passValidation = $(".passwordV")
+  const passValidationSpan = $(".passwordVSpan")
 
   useEffect(() => {
     if (userData && userData.email && userData.username) {
@@ -24,9 +27,6 @@ function User(props) {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    var passInput = $(".passwordI")
-    var passValidation = $(".passwordV")
-    var passValidationSpan = $(".passwordVSpan")
     if (passInputV === passValidationInputV) {
 
       passInput.removeClass("border-danger")
@@ -49,22 +49,28 @@ function User(props) {
 
     }
   }
+
+  const handleReset = (e) =>{
+    setUsernameInputV(userData.username)
+    setemailInputV(userData.email)
+    setPassInputV("")
+    setPassValidationInputV("")
+  }
+
   return (
-    <div>
-      <Navbar />
-      <div className="container mt-4">
-        <div className="row">
+    <Layout>
+      <div className="row">
           <div className="col-md-7">
             <div className="card">
               <div className="card-header">
                 Düzenle : {userData.username}
               </div>
               <div className="card-body">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} onReset={handleReset}>
                   <label>Kullanıcı İsmi: </label> <br />
-                  <input type="text" value={usernameInputV} className="form-control" onChange={e => setUsernameInputV(e.target.value)} /> <br />
+                  <input type="text" value={usernameInputV} id='usernameI' className="form-control" onChange={e => setUsernameInputV(e.target.value)} /> <br />
                   <label>E-Posta: </label><br />
-                  <input type="email" className="form-control" value={emailInputV} onChange={e => setemailInputV(e.target.value)} />
+                  <input type="email" id='emailI' className="form-control" value={emailInputV} onChange={e => setemailInputV(e.target.value)} />
                   <hr />
                   <label>Eski Şifre: </label><br />
                   <input type="password" placeholder='********' className="form-control passwordI" onChange={e => setPassInputV(e.target.value)} /><br />
@@ -80,10 +86,10 @@ function User(props) {
             </div>
           </div>
         </div>
-      </div>
+      
 
       {/* Message Modal */}
-
+      
       <div id="messageModal" className="modal fade" tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -101,7 +107,7 @@ function User(props) {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

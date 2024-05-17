@@ -1,16 +1,13 @@
 import React from 'react'
-import Navbar from '../Components/Navbar'
+import Layout from './Layout'
 
-function Home(props) {
+function Home() {
   document.title = "Ana Sayfa"
   if (true) {
     return (
-      <div>
-        <Navbar activeMain />
-        <div className="container mt-4">
-          buraya projenin içeriği gelecek
-        </div>
-      </div>
+      <Layout>
+        <h1>Deneme</h1>
+      </Layout>
     )
   }
 }
