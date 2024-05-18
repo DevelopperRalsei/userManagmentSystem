@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Error from './Pages/Error'
-import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Users from './Pages/Users'
@@ -11,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='*' element={<Error message="Sayfa Bulunamadı"/>}/>
-        <Route index path='/' element={<Home />}/>
+        <Route index path='/' element={<Users />}/>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register/>}/>
         <Route path='/users' element={<Users />}/>

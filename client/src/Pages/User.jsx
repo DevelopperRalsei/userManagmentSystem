@@ -5,7 +5,7 @@ import $ from "jquery"
 import Layout from './Layout'
 
 function User(props) {
-  const {userData} = props
+  const { userData } = props
 
   const [usernameInputV, setUsernameInputV] = useState("")
   const [emailInputV, setemailInputV] = useState("")
@@ -38,7 +38,7 @@ function User(props) {
           setMsg(response.data.message)
           const messageModal = new bootstrap.Modal(document.getElementById("messageModal"))
           messageModal.show()
-        }).catch(err=>{
+        }).catch(err => {
           console.error(err)
         })
 
@@ -50,7 +50,7 @@ function User(props) {
     }
   }
 
-  const handleReset = (e) =>{
+  const handleReset = (e) => {
     setUsernameInputV(userData.username)
     setemailInputV(userData.email)
     setPassInputV("")
@@ -60,36 +60,44 @@ function User(props) {
   return (
     <Layout>
       <div className="row">
-          <div className="col-md-7">
-            <div className="card">
-              <div className="card-header">
-                Düzenle : {userData.username}
-              </div>
-              <div className="card-body">
-                <form onSubmit={handleSubmit} onReset={handleReset}>
-                  <label>Kullanıcı İsmi: </label> <br />
-                  <input type="text" value={usernameInputV} id='usernameI' className="form-control" onChange={e => setUsernameInputV(e.target.value)} /> <br />
-                  <label>E-Posta: </label><br />
+        <div className="col-md-7">
+          <div className="card">
+            <div className="card-header">
+              Düzenle : {userData.username}
+            </div>
+            <div className="card-body">
+              <form onSubmit={handleSubmit} onReset={handleReset}>
+                <div className="mt-3">
+                  <label>Kullanıcı İsmi: </label>
+                  <input type="text" value={usernameInputV} id='usernameI' className="form-control" onChange={e => setUsernameInputV(e.target.value)} />
+                </div>
+                <div className="mt-3">
+                  <label>E-Posta: </label>
                   <input type="email" id='emailI' className="form-control" value={emailInputV} onChange={e => setemailInputV(e.target.value)} />
-                  <hr />
-                  <label>Eski Şifre: </label><br />
-                  <input type="password" placeholder='********' className="form-control passwordI" onChange={e => setPassInputV(e.target.value)} /><br />
-                  <label>Yeni Şifre: </label><br />
+                </div>
+                <hr />
+                <div className="mt-3">
+                  <label>Yeni Şifre: </label>
+                  <input type="password" placeholder='********' className="form-control passwordI" onChange={e => setPassInputV(e.target.value)} />
+                </div>
+                <div className="mt-3">
+                  <label>Şifre Doğrula: </label><br />
                   <input type="password" placeholder='********' className="form-control passwordV" onChange={e => setPassValidationInputV(e.target.value)} />
-                  <span className='passwordVSpan d-none text-danger'>Şifre Eşleşmedi</span><br /><br />
-                  <div className='input-group w-100'>
-                    <button className='btn btn-default border' type='reset'>Sıfırla</button>
-                    <button type="submit" className='btn btn-success'>Kaydet</button>
-                  </div>
-                </form>
-              </div>
+                  <span className='passwordVSpan d-none text-danger'>Şifre Eşleşmedi</span>
+                </div>
+                <div className='mt-3 input-group w-100'>
+                  <button className='btn btn-default border' type='reset'>Sıfırla</button>
+                  <button type="submit" className='btn btn-success'>Kaydet</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      
+      </div>
+
 
       {/* Message Modal */}
-      
+
       <div id="messageModal" className="modal fade" tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
