@@ -9,7 +9,7 @@ function Login() {
       <div className="px-4 py-3 bg-white rounded shadow">
          <h3>Giriş Yap</h3>
          <hr />
-         <form action="#" className=''>
+         <form action="#" className='form'>
             <div className="input-container mt-2">
                <label htmlFor="">Kullanıcı Adı</label> <br />
                <input name='username' type="text" className="form-control" placeholder='örn. Mehmet-32'/>

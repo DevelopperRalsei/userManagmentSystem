@@ -1,9 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import Error from './Pages/Error'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Users from './Pages/Users'
+import Delete from './Pages/Delete'
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register/>}/>
         <Route path='/users' element={<Users />}/>
-        <Route path='/users/:Id' element={<Users />}/>
+        <Route path='/deleteUser' element={<Delete />}/>
       </Routes>
     </BrowserRouter>
   )

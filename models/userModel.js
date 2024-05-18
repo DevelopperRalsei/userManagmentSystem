@@ -33,7 +33,6 @@ module.exports = {
         callback(err,null)
         return
       }
-      console.log("Mysql Connected")
 
       const sql = "SELECT * FROM users WHERE id = ?"
       con.query(sql,[id],(err,result)=>{
@@ -43,7 +42,7 @@ module.exports = {
           return
         }
         callback(null,result)
-        con.release(console.log("MySQL pool connection Ended"))
+        con.release()
       })
     })
   },
@@ -55,7 +54,6 @@ module.exports = {
         callback(err,null)
         return
       }
-    console.log("Mysql Connected")
 
 
     const sql = "INSERT INTO users (username, email,password) VALUES (?, ?, ?)"
@@ -66,7 +64,7 @@ module.exports = {
         return
       }
       callback(null)
-      con.release(console.log("MySQL Pool Connection Ended"))
+      con.release()
     })
     })
   },
@@ -88,6 +86,28 @@ module.exports = {
         }
         callback(null)
       })
+      con.release()
+    })
+  },
+
+  deleteUser: (id, callback) =>{
+    pool.getConnection((err,con)=>{
+      if(err){
+        console.error("MySQL Pool Connection Err: "+err)
+        callback(err)
+        return 
+      }
+
+      const sql = "DELETE FROM `users` WHERE id = ?"
+      con.query(sql,[id],err=>{
+        if(err){
+          console.error("MySQL Query Err: "+err)
+          callback(err)
+          return
+        }
+        callback(null)
+      })
+
       con.release()
     })
   }

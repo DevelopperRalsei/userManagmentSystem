@@ -3,6 +3,7 @@ import userRoutes from "../Routes/UserRoutes"
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min'
 import $ from "jquery"
 import Layout from './Layout'
+import MessageBox from '../Components/MessageBox'
 
 function User(props) {
   const { userData } = props
@@ -98,23 +99,7 @@ function User(props) {
 
       {/* Message Modal */}
 
-      <div id="messageModal" className="modal fade" tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="messageModalLabel">Sunucu Mesajı</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              {msg}
-            </div>
-            <div className="modal-footer">
-              <a href="/users" className="btn btn-success">Kullanıcı Listesi</a>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <MessageBox msg={msg} />
     </Layout>
   )
 }

@@ -6,7 +6,7 @@ module.exports = {
     if(!req.params.id){
       userModel.getAllUsers((err, result) => {
         if (err) {
-          return res.status(500).send({ message: "Database error: "+err })
+          return res.send({ message: "Database error: "+err })
         }
         res.send({data: result})
       })
@@ -14,9 +14,9 @@ module.exports = {
       userModel.getAUser(req.params.id,(err,result)=>{
         if(err){
           console.log(err)
-          return res.status(500).send({ message:"Database error: "+err })
+          return res.send({ message:"Database error: "+err })
         }
-        res.send({data: result})
+        return res.send({data: result})
       })
     }
   },
@@ -26,22 +26,17 @@ module.exports = {
 
     bcrypt.hash(newPass, 10, (err, hashedPassword) => {
       if (err) {
-        console.error("Error hashing password: " + err);
-        res.send({ message: "Password hashing Err: "+err });
-        return;
+        console.error("Error hashing password: " + err)
+        return res.send({ message: "Password hashing Err: "+err })
       }
       
       userModel.newUser(newUsername, newMail, hashedPassword, (err) => {
         if (err) {
           return res.status(500).send({ error: "Database error: "+err });
         }
-        res.status(201).send({ message: "Yeni Kullanıcı Oluşturuldu" });
+        return res.status(201).send({ message: "Yeni Kullanıcı Oluşturuldu" });
       })
     })
-  },
-
-  compareUser: (req,res)=> {
-    
   },
 
   editUserPUT: (req,res)=>{
@@ -61,6 +56,19 @@ module.exports = {
 
         return res.send({message: "Kullanıcı Değiştirildi"})
       })
+    })
+  },
+
+  deleteUserDELETE: (req,res)=>{
+    const {id} = req.body
+
+    userModel.deleteUser(id,err=>{
+      if(err){
+        console.error("MySQL Query Err: "+err)
+        return res.send({message: "Kullanıcı Silinemedi: "+err})
+      }
+
+      return res.send({message: "Kullanıcı başarıyla silindi"})
     })
   }
 };
