@@ -23,7 +23,10 @@ const UserRoutes = {
       newMail: mail,
       newPass: pass
     }).then(response => { return response })
-      .catch(err => console.error("Server post err: " + err)),
+      .catch(err => {
+        console.error("Server post err: " + err)
+        return []
+      }),
 
   updateUser: async (id, username, mail, pass) =>
     await axios.put("http://localhost:8080/api/users/updateUser", {
