@@ -44,10 +44,10 @@ function Users() {
         <table className="table table-striped table-bordered rounded">
           <thead className='table-light'>
             <tr>
-              <th width="1%">#</th>
+              <th style={{width: 1}}>#</th>
               <th>Kullanıcı İsmi</th>
               <th>Kullanıcı e-Posta</th>
-              <th width="1%">Düzenle</th>
+              <th style={{width: 1}}>Düzenle</th>
             </tr>
           </thead>
           <tbody>

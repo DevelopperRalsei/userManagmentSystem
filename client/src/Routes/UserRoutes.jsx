@@ -39,15 +39,15 @@ const UserRoutes = {
         console.error("Server put err: " + err)
         return []
       }),
-
-  deleteUser: async (id) =>
-    await axios.delete("http://localhost:8080/api/users/deleteUser", {
-      id: id
-    }).then(response => { return response })
-      .catch(err => {
-        console.error("Server delete err: " + err)
-        return []
-      })
+    
+  deleteUser : async (id) => 
+    await axios.delete("http://localhost:8080/api/users/deleteUser",{
+      data : {id : id}
+    }).then(response => {return response})
+    .catch(err => {
+      console.error("Server delete err: "+err)
+      return []
+    })
 }
 
 export default UserRoutes

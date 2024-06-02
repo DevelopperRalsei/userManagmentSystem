@@ -59,16 +59,16 @@ module.exports = {
     })
   },
 
-  deleteUserDELETE: (req,res)=>{
+  deleteUserDELETE: (req,res) => {
     const {id} = req.body
 
     userModel.deleteUser(id,err=>{
       if(err){
-        console.error("MySQL Query Err: "+err)
-        return res.send({message: "Kullanıcı Silinemedi: "+err})
+        return res.send({messasge: "Kullanıcı Silinemedi: "+err})
       }
-
-      return res.send({message: "Kullanıcı başarıyla silindi"})
+      return res.send({message: "Kullanıcı Silindi"})
     })
   }
+
+  
 };

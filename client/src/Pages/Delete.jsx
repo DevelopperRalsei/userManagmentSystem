@@ -1,75 +1,60 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Layout from './Layout';
-import Error from './Error';
-import MessageBox from '../Components/MessageBox';
-import UserRoutes from '../Routes/UserRoutes';
+import React, { useState, useEffect, useRef } from 'react'
+import Layout from './Layout'
+import UserRoutes from '../Routes/UserRoutes'
+import MessageBox from '../Components/MessageBox'
 
 function Delete() {
-  const URLParams = new URLSearchParams(window.location.search);
-  const Id = URLParams.get('Id');
+  const [userData, setUserData] = useState({})
+  const [userId, setUserId] = useState("")
+  const [msgBoxMsg, setMsgBoxMsg] = useState("")
 
-  const [msg, setMsg] = useState('');
-  const [user, setUser] = useState({});
-  const messageModalRef = useRef(null);
+  const messageBoxRef = useRef()
 
   useEffect(() => {
-    if (Id) {
-      UserRoutes.getAUser(Id)
-        .then((response) => {
-          setUser(response.data.data[0]);
-        })
-        .catch((err) => {
-          setMsg(err.message);
-          if (messageModalRef.current) {
-            messageModalRef.current.show();
-          }
-        });
-    }
-  }, [Id]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    UserRoutes.deleteUser(Id)
+    const URLParams = new URLSearchParams(window.location.search)
+    const Id = URLParams.get("Id")
+    setUserId(Id)
+    UserRoutes.getAUser(Id)
       .then(response => {
-        setMsg(response.data.message)
-        if (messageModalRef.current) {
-          messageModalRef.current.show();
+        if(response.data.data[0]){
+          setUserData(response.data.data[0])
+        } else {
+          setMsgBoxMsg("Kullanıcı Bulunamadı")
+          messageBoxRef.current.show()
         }
       })
       .catch(err => {
-        setMsg(err.message);
-        if (messageModalRef.current) {
-          messageModalRef.current.show();
-        }
-      });
-  };
+        setMsgBoxMsg("Bir şey ters gitti: "+err)
+        messageBoxRef.current.show()
+      })
+  }, [])
 
-  if (Id && URLParams) {
-    return (
-      <Layout>
-        <div className="card">
-          <div className="card-header">
-            Şunu kullanıcıyı silmek istediğinize emin misiniz, {user.username}
-          </div>
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <a href="/users" className="btn btn-default border">
-                Geri Git
-              </a>
-              &nbsp;&nbsp;
-              <button type="submit" className="btn btn-danger">
-                Sil
-              </button>
-            </form>
-          </div>
-        </div>
-        <MessageBox ref={messageModalRef} msg={msg} />
-      </Layout>
-    );
-  } else {
-    return <Error message="Kullanıcı Bulunamadı" />;
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    UserRoutes.deleteUser(userId)
+      .then(response => {
+        setMsgBoxMsg(response.data.message)
+        messageBoxRef.current.show()
+      }).catch(err => {
+        setMsgBoxMsg("Birşey ters gitti: "+err)
+        messageBoxRef.current.show()
+      })
   }
+
+  return (
+    <Layout>
+      <form className='card' onSubmit={handleSubmit}>
+        <div className="card-header">Bu kullanıcıyı silecekmisiniz : {userData.username}</div>
+        <div className="card-body">
+          <a href='/users' type='reset' className="btn btn-default border">Hayır</a>
+          <button type='submit' className="ms-2 btn btn-danger">Sil</button>
+        </div>
+      </form>
+
+      <MessageBox ref={messageBoxRef} msg={msgBoxMsg}/>
+
+    </Layout>
+  )
 }
 
-export default Delete;
+export default Delete

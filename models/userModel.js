@@ -90,24 +90,23 @@ module.exports = {
     })
   },
 
-  deleteUser: (id, callback) =>{
+  deleteUser: (id,callback) => {
     pool.getConnection((err,con)=>{
       if(err){
-        console.error("MySQL Pool Connection Err: "+err)
+        console.error("Mysql Pool connection err: "+err)
         callback(err)
-        return 
+        return;
       }
-
       const sql = "DELETE FROM `users` WHERE id = ?"
       con.query(sql,[id],err=>{
         if(err){
-          console.error("MySQL Query Err: "+err)
+          console.error("Mysql Query Err: "+err)
           callback(err)
           return
-        }
+        } 
         callback(null)
+        return
       })
-
       con.release()
     })
   }
